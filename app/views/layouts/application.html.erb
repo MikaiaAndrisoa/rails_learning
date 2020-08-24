@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>RAILS LEARNING</title>
+  <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= csrf_meta_tags %>
+</head>
+
+<body class="<%= controller.controller_name %>">
+ 
+ <nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <span class="navbar-brand">E-commerce App</span>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><%= link_to 'Home', store_index_url %></li>
+
+    </ul>
+    <% if session[:user_id] %>
+        <ul class="navbar-right nav navbar-nav">
+            <li><%= link_to 'Orders',
+            orders_path
+            %></li>
+            <li><%= link_to 'Products', products_path %></li>
+            <li><%= link_to 'Users', users_path %></li>
+            <li>
+              <%= link_to logout_path, method: :delete do %>
+                <span class="glyphicon glyphicon-log-out"></span> Logout
+              <% end %>
+            </li>
+        </ul>
+    <% end %>
+  </div>
+</nav>
+
+
+ 
+ <div id="columns">
+    <div id="side">
+
+      <div id="cart">
+        <% if @cart %>
+            
+            <%= hidden_div_if(@cart.line_items.empty?, id: 'cart') do %>
+              <%= render @cart %>
+            <% end %>
+
+        <% end %>
+      </div>
+  
+    </div>
+
+
+ 
+    <div id="main"  class="container-fluid">
+        <%= yield %>
+    </div>
+ 
+ </div>
+</body>
+</html>

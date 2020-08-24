@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Your Pragmatic Catalog</h1>
+
+ <% cache @products do %>
+
+    <% @products.each do |product| %>
+
+        <% cache product do %>
+         
+            <h3><%= product.title %></h3>
+            <div class="entry row">
+             
+
+                <div class="col-md-2">
+
+                    <% if product.photos.first %>
+                        <%= image_tag(product.photos.first.image.url) %>
+                    <% else %>
+                            N/A
+                    <% end %>
+
+                </div>
+
+                <div class="col-md-2">
+                    <span class="price"><%= number_to_currency(product.price) %></span>
+                </div>
+                
+                <div class="col-md-5">
+                    <%= sanitize(product.description) %>
+                </div>
+                
+                <div class="col-md-3 text-right">
+                    <%= button_to 'Add to Cart', line_items_path(product_id: product), remote: true, :class => 'btn btn-default btn-md' %>
+                </div>
+            
+            </div>
+       
+        <% end %>
+   
+    <% end %>
+
+ <% end %>

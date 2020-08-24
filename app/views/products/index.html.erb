@@ -1,0 +1,62 @@
+<%= link_to ' + New Product', new_product_path, :class => 'btn btn-md btn-success' %>
+<%= smart_listing_controls_for(:products, {class: 'form-inline text-center'}) do %>
+
+
+
+        <div class="form-group filter input-append">
+
+            <%= text_field_tag :filter_date_min, '', class: "date-filter search form-control", placeholder: "Min. date created", autocomplete: :off %>
+            <%= text_field_tag :filter_date_max, '', class: "date-filter search form-control", placeholder: "Max. date created", autocomplete: :off %>
+            
+
+            
+            &nbsp;... | ...&nbsp;
+            <%= text_field_tag :filter_title, '', class: "search form-control", placeholder: "Filter by title", autocomplete: :off  %>
+            <%= text_field_tag :filter_description, '', class: "search form-control", placeholder: "Filter by description", autocomplete: :off  %>
+            &nbsp;... | ...&nbsp;
+            <%= number_field_tag :filter_min_price, '', class: "search form-control", placeholder: "Minimum price", autocomplete: :off  %>
+            <%= number_field_tag :filter_max_price, '', class: "search form-control", placeholder: "Maximum price", autocomplete: :off  %>
+            <!-- <button class="btn btn-primary filter-btn disabled" type="submit"><i class="glyphicon glyphicon-filter"></i> Apply filters </button> -->
+        </div>
+
+
+
+<% end %>
+
+
+<hr>
+
+<p id="notice"><%= notice %></p>
+
+<h1>Products list</h1>  
+
+      <%= smart_listing_render(:products) %>
+
+<br/>
+
+<hr>
+
+<%= link_to ' + New Product', new_product_path, :class => 'btn btn-md btn-success' %>
+
+<script>
+
+$(document).ready(function(){
+
+    $(function() {
+
+      $('.date-filter').datepicker({
+          dateFormat: "yy-mm-dd"
+
+      });
+    
+    });
+
+    $('.date-filter').on('change', function(){
+
+        $(this).submit();
+
+    });
+    
+});
+
+</script>

@@ -1,0 +1,58 @@
+
+<% unless smart_listing.empty? %>
+
+    <table class='table table-striped'>
+    <thead>
+        <th></th>
+        <th><%= smart_listing.sortable "Sort by products title", :title %></th>
+    </thead>
+    <tbody>
+    <% smart_listing.collection.each do |prod| %>
+        <tr>
+            <td rowspan="2">
+
+                    <% if prod.photos.first %>
+                        <%= image_tag(prod.photos.first.image.url, :class => 'list_image') %>
+                    <% else %>
+                        <span class="text-danger">No image ...</span> 
+                    <% end %>
+            
+            </td>
+
+            <td>
+                <dl>
+                    <dt><h2><%= prod.title %></h2></dt>
+                    <dd><%= truncate(strip_tags(prod.description), length: 700) %></dd>
+                </dl>
+                <small class="date-created">
+                    <span class="glyphicon glyphicon-time"></span>&nbsp;
+                    Created at <%= prod.created_at %>
+                </small>
+            </td>
+        </tr>
+        
+        <tr>
+            <td class="text-right">
+                <span class="price-on-list"><span class="glyphicon glyphicon-tag"></span>&nbsp;<%= number_to_currency(prod.price) %></span>
+                <%= link_to prod, class: 'btn btn-info btn-xs' do %>
+                    <span class="glyphicon glyphicon-th"></span>&nbsp;See more
+                <% end %>
+                <%= link_to edit_product_path(prod), class: 'btn btn-xs btn-warning' do %>
+                   <span class="glyphicon glyphicon-pencil"></span>&nbsp;Modify
+                <% end %> 
+                
+                <%= link_to prod, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-xs' do %>
+                    <span class="glyphicon glyphicon-trash"></span>&nbsp;Delete
+                <% end %>
+            </td>
+        </tr>
+
+    <% end %>
+    </tbody>
+    </table>
+    
+<% else %>
+
+    <p class="alert alert-warning">No product to show!</p>
+    
+<% end %>

@@ -1,0 +1,75 @@
+<h1>Editing Product</h1>
+
+<!-- <%= render 'form', product: @product %> -->
+<%= form_for @product, html: { multipart: true } do |f| %>
+
+    <% if @product.errors.any? %>
+   
+        <div id="error_explanation">
+        <h2>
+            <%= "#{pluralize(@product.errors.count, "error")} prohibited this product from being saved:" %>
+        </h2>
+        <ul>
+            <% @product.errors.full_messages.each do |msg| %>
+            <li>
+                <%= msg %>
+            </li>
+            <% end %>
+        </ul>
+        </div>
+ 
+  <% end %>
+
+ <div>
+    <%= f.label :title %>
+    <%= f.text_field :title, :class =>'form-control' %>
+  </div>
+
+  <div>
+    <%= f.label :description %>
+    <%= f.text_area :description, :class =>'form-control' %>
+  </div>
+  
+  <div>
+    <%= f.label :price %>
+    <%= f.text_field :price, :class =>'form-control' %>
+  </div>
+  <br>
+  <% if @product.photos.empty? %>
+      <div class="alert alert-danger">
+        No image was assigned to this product
+      </div>
+  <% else %>
+
+    <% unless @product.photos.empty? %>
+
+      <% @product.photos.each do |pic| %>
+
+          <div class="thumbnail-container">
+            <%= image_tag pic.image.url, :class => 'img-thumbnail' %>
+            <div class="text-center">
+              <%= link_to "Delete picture", pic, :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'btn btn-danger btn-xs' %>
+            </div>
+          </div>
+          
+      <% end %>
+    <% end %>
+
+<% end %>
+ <br>
+  <div>
+    <label>Add images ...</label>
+    <div>
+      <%= file_field_tag "images[]", type: :file, multiple: true,:class =>'form-control'%>
+    </div>
+  </div>
+  <br>
+  <hr>
+  <div>
+     <%= f.submit 'Apply updates ...', :class => 'btn btn-success btn-md' %>
+  </div>
+<% end %>
+
+<hr>
+<%= link_to '<< To products list', products_path, :class => 'btn btn-xs btn-default' %> |
+<%= link_to 'To product details ...', @product, :class => 'btn btn-xs btn-default' %> 

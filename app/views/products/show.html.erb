@@ -1,0 +1,32 @@
+<h2>  <%= @product. title %> </h2>
+<p id="notice" class="alert alert-info"><%= notice %></p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @product.description %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @product.price %>
+</p>
+<hr>
+<h4>Photo gallery</h4>
+<div class="thumbnails">
+
+<% unless @product.photos.empty? %>
+
+  <% @product.photos.each do |pic| %>
+
+      <div class="thumbnail-container">
+        <%= image_tag pic.image.url, :class => 'img-thumbnail' %>
+      </div>
+
+  <% end %>
+
+<% end %>
+
+</div>
+<hr>
+<%= link_to '<< To products list ', products_path, :class => 'btn btn-xs btn-default' %> |
+<%= link_to 'Edit ...', edit_product_path(@product), :class => 'btn btn-xs btn-default' %> 
